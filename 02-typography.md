@@ -76,3 +76,43 @@ h1 { font-size: clamp(2rem, 1rem + 3vw, 3.5rem); }
 **1 font family (+mono) · 6-8 size · 3-4 weight · 2-3 color түвшин** — үүнээс цомхон систем бараг бүх UI-д хүрэлцдэг.
 
 Албан ёсны стандарт гэвэл WCAG л бий (хэмжээ биш contrast + 200% zoom шаарддаг). Material Design (13 түвшин), Apple HIG (11 түвшин) нь convention; практикт 6-8 л ашиглагддаг.
+
+## Шрифт ачаалалт
+
+- **`font-display: swap`** — body/UI шрифтэд default. Чимэглэлийн, display-only шрифтэд `optional` (100ms-д ирэхгүй бол fallback-аар үлдэнэ, CLS үүсгэхгүй).
+- Preload зөвхөн **1-2 критик файл** (body 400 + 600 жишээ нь): `<link rel="preload" href="/fonts/inter-latin-cyr.woff2" as="font" type="font/woff2" crossorigin>`. `crossorigin`-гүй бол хоёр удаа татдаг. 3-аас олон preload нь бусад ресурсийг хойшлуулна.
+- **Subsetting**: `unicode-range`-ээр latin + cyrillic тус тусад нь файл болгож, хэрэгтэйг нь л татуулна. Бүтэн Inter ~300KB vs latin+cyrillic subset ~60-80KB woff2.
+- **Variable font** — 4 static файлын оронд нэг файл (weight 100-900 + opsz); ихэвчлэн нийт байт ч бага. `font-weight: 100 900` гэж `@font-face`-д зарла.
+- **Metric-compatible fallback** — CLS-ийг 0 болгох аргачлал:
+
+```css
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+body { font-family: Inter, "Inter Fallback", system-ui, sans-serif; }
+```
+
+Утгыг гараар биш — Fontaine / Capsize / `next/font` автоматаар бодно.
+
+- **Self-host** сонго: Google Fonts хост нь 2020-оос хойш browser cache-ээ хуваалцдаггүй тул хурдны давуу тал байхгүй; CSP-д нэмэлт `font-src` нээх шаардлагагүй; GDPR-ийн IP дамжуулалтын асуудалгүй. `next/font`, Fontsource хоёулаа self-host хийдэг.
+- `font-synthesis: none` — 600 файл байхгүй үед browser «хуурамч bold/italic» зурахыг хориглоно; дутуу weight-ийг нүдээр илрүүлнэ.
+- Нийт шрифт байт: **≤100KB** критик замд, 4 файлаас илүүгүй.
+
+**Кирилл**: сонгосон шрифт бүр кирилл (U+0400-04FF) + монгол-тусгай **Ө (U+04E8/04E9), Ү (U+04AE/04AF)** үсгийг агуулж байгааг заавал шалга — олон latin-first шрифт (Geist, зарим display font) дутуу. Дутуу бол browser өөр шрифтээс нөхөж «холимог» харагдана. Дэлгэрэнгүй ба жагсаалт: 09-localization-mn.md-г үз.
+
+## Эх сурвалж
+
+- WCAG 2.2 — SC 1.4.4 Resize Text, 1.4.10 Reflow, 1.4.12 Text Spacing — w3.org/TR/WCAG22/
+- MDN — `font-display`, `unicode-range`, `size-adjust`, `ascent-override`, `font-synthesis`, `clamp()`, `<link rel="preload">` — developer.mozilla.org/en-US/docs/Web/CSS/@font-face
+- web.dev — «Best practices for fonts»; «Reduce web font size»; «Optimize Cumulative Layout Shift»
+- Utopia — Fluid type scale calculator — utopia.fyi/type/calculator
+- Type Scale — typescale.com (modular scale харьцаанууд)
+- Material 3 — Typography (type scale tokens); Apple HIG — Typography
+- Refactoring UI — «Establish a type scale», «Use good fonts»
+- Nielsen Norman Group — «Legibility, Readability, and Comprehension»
+- Fontaine (unjs), Capsize (seek-oss) — fallback metric tooling

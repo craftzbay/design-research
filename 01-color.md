@@ -39,3 +39,30 @@ Mobile дээр 30%-ийн давхарга (sidebar, panel) багасаж 60% 
 - Ижил lightness-тэй өнгөнүүд hue өөр байсан ч зэрэгцэхэд «вибрация» үүсгэдэг — саарал дээр saturated өнгө тавихдаа lightness-ийн зөрүү өг.
 - Ногоон/улааныг статусын цорын ганц ялгаа болгохгүй — өнгөний хараа сулруу хүнд icon/label давхар өг.
 - Брэнд тогтоогүй проектод: neutral суурь (slate/zinc) + нэг accent + semantic 3 өнгөөр эхэл — дараа нь accent token-оо л солино.
+
+## color-scheme ба системийн горимууд
+
+- **`:root { color-scheme: light dark; }` заавал** — browser-ийн native form control, scrollbar, `<select>` попап theme-ээ дагана. Үгүй бол dark theme дээр цагаан scrollbar, цагаан checkbox үлддэг.
+- `data-theme`-ээр гараар сольж байгаа бол `[data-theme="dark"] { color-scheme: dark }` гэж тусад нь зааж өг (08-design-tokens.md-г үз).
+- `@media (prefers-contrast: more)` — border-ыг 1px→2px, `--fg-muted`-ийг `--fg` рүү ойртуул, shadow-г border-оор соль.
+- `@media (forced-colors: active)` (Windows High Contrast): өнгөний токен бүгд хүчингүй болж **системийн өнгө** (`Canvas`, `CanvasText`, `ButtonText`, `Highlight`, `LinkText`) үйлчилнэ. Дүрэм: `background`-аар илэрхийлсэн хил, сонгогдсон төлөв алга болдог тул `border: 1px solid transparent`-ийг урьдчилж бич — forced mode-д transparent нь системийн өнгө болно. Зайлшгүй өнгө хадгалах (брэнд лого, статус цэг) элементэд л `forced-color-adjust: none`.
+- `@media (prefers-reduced-transparency: reduce)` — `backdrop-filter: blur()`, `opacity < 1` фонг тунгалаг бус surface-аар соль.
+
+## OKLCH ба орчин үеийн палитр
+
+- **OKLCH = perceptual uniform**: L (0-1) нэгийг өөрчлөхөд нүдэнд харагдах цайралт hue бүрд ижил өөрчлөгддөг (HSL-д шар L=50% нь цэнхэр L=50%-аас хавьгүй цайвар харагддаг). Tailwind v4-ийн default palette бүхэлдээ OKLCH.
+- Scale гаргах дүрэм: **C ба H тогтмол, зөвхөн L-ийг өөрчил**. Жишээ 50→900: L = 0.97 · 0.93 · 0.87 · 0.78 · 0.68 · 0.58 · 0.50 · 0.42 · 0.34 · 0.26. Хамгийн тод (400-600) шатлалд C дээд тал нь 0.15-0.2, захын шатлалд C-г 30-50% бууруул — эс бөгөөс 50/900 нь gamut-аас гарна.
+- Hover/tint-ийг шинэ hex биш `color-mix`-ээр: `color-mix(in oklch, var(--accent), black 10%)` (hover), `color-mix(in oklch, var(--accent), transparent 90%)` (цайвар фон). Interpolation-д `in oklch` — `in srgb` дунд нь бохир саарал үүсгэдэг.
+- **P3 gamut**: OKLCH нь sRGB-ээс гадна өнгө (C > ~0.3) заах боломжтой; sRGB дэлгэцэнд browser өөрөө clip хийнэ. Хуучин browser-т fallback: `background: #2563eb; background: oklch(54% 0.2 262);` — давхар бичих, эсвэл `@supports (color: oklch(0% 0 0))`.
+- **APCA** (WCAG 3 drafts): харьцаа биш Lc утга, текстийн хэмжээ/weight-тэй уялдана. Ойролцоо босго: body текст (14-16px/400) **Lc ≥ 75**, том текст (24px+/700) **Lc ≥ 60**, placeholder/disabled Lc ≥ 45. Одоогоор хуулийн шаардлага нь WCAG 2.x ratio хэвээр — APCA-г **нэмэлт** шалгуур болгож, ratio-г ч хангаж бай.
+
+## Эх сурвалж
+
+- WCAG 2.2 — SC 1.4.3 Contrast (Minimum), 1.4.6 Contrast (Enhanced), 1.4.11 Non-text Contrast, 1.4.1 Use of Color — w3.org/TR/WCAG22/
+- MDN — `color-scheme`, `forced-colors`, `forced-color-adjust`, `prefers-contrast`, `prefers-reduced-transparency`, `color-mix()`, `oklch()` — developer.mozilla.org/en-US/docs/Web/CSS/
+- web.dev — «Styling for Windows high contrast with new standards for forced colors»; «Building a color scheme»
+- Evil Martians — «OKLCH in CSS: why we moved from RGB and HSL» — evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl
+- Tailwind CSS v4 docs — Colors (OKLCH palette) — tailwindcss.com/docs/colors
+- APCA Readability Criterion — apcacontrast.com; W3C Silver/WCAG 3 Working Draft
+- Refactoring UI (Wathan, Schoger) — «Building Your Color Palette»
+- Apple HIG — Color; Material 3 — Color system

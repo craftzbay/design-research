@@ -52,3 +52,13 @@ Shadow нь «гоёл» биш **давхаргын мэдээлэл** — юу
 - `object-fit: cover` + төвлөрөл; хүний зурагт `object-position` анхаар.
 - Placeholder: blur-up эсвэл dominant-color фон — цагаан гялсхийлт муухай.
 - Format: WebP/AVIF, srcset-тэй responsive; hero зургийг preload, доод зургуудыг lazy.
+
+## Эх сурвалж
+
+- Refactoring UI (Wathan, Schoger) — shadow давхарлах, border vs shadow, дотоод/гадаад radius харьцаа.
+- Material Design 3 — Elevation (m3.material.io/styles/elevation), Icons (stroke/size).
+- Apple HIG — Materials, Icons, Images.
+- WCAG 2.2 SC 1.4.11 Non-text Contrast (3:1 — input border, icon).
+- web.dev — Optimize Cumulative Layout Shift (`aspect-ratio`, зургийн хэмжээ), Serve responsive images, Image formats (WebP/AVIF).
+- MDN — `object-fit`, `object-position`, `aspect-ratio`, `<img srcset>`.
+- Lucide / Heroicons / Phosphor баримт — icon хэмжээ, stroke width.

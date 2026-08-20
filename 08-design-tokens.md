@@ -79,3 +79,42 @@ shadcn/ui яг энэ хэв маягаар (semantic HSL variables + Tailwind) 
 1. Компонент дотор hex/px шууд бичихгүй — заавал token.
 2. Token нэр нь **юунд** хэрэглэгдэхийг хэлнэ, **ямар өнгө** болохыг биш (`--color-blue` ✗, `--color-accent` ✓).
 3. Шинэ token нэмэхээсээ өмнө байгаагаа эргэж хар — token-ийн тоо өсөх нь системийн үнэ цэнийг бууруулдаг.
+
+## W3C DTCG формат ба tooling
+
+Token-ийг CSS-д биш **платформ-хамааралгүй JSON**-д хадгалаад Figma, CSS, iOS, Android руу build хийдэг. Стандарт: **W3C Design Tokens Community Group (DTCG) format** (2025-10-д 1.0 стабил).
+
+```json
+{
+  "color": {
+    "blue": { "600": { "$value": "#2563eb", "$type": "color" } },
+    "accent": {
+      "$value": "{color.blue.600}",
+      "$type": "color",
+      "$description": "Primary action, links (10%)"
+    }
+  },
+  "space": { "4": { "$value": "16px", "$type": "dimension" } }
+}
+```
+
+- `$value`, `$type` заавал; `$description` зөвлөмж. Alias `{color.blue.600}` = гурван давхаргын холбоос (primitive → semantic) файлд өөрт нь шингэнэ.
+- `$type`-ууд: `color`, `dimension`, `fontFamily`, `fontWeight`, `duration`, `cubicBezier`, `number`, `shadow`, `typography` (composite).
+- **Build**: Style Dictionary v4 (DTCG-г шууд уншина) → `tokens.css` (`:root { --color-accent: … }`), мөн `.ts`, Swift, Kotlin. Tokens Studio (Figma plugin) тэр JSON-ийг Figma variables ↔ git repo хоёр тийш sync хийнэ → **Figma ба код нэг эх сурвалжтай**.
+- Theme = тусдаа set: `tokens/core.json` (primitive) + `tokens/light.json` + `tokens/dark.json` (semantic alias л өөр). Build нь `:root` ба `[data-theme="dark"]` блок хоёрыг гаргана.
+- Нэрлэлтийн давхарга JSON зам болно: `color.blue.600` (primitive) → `color.accent` (semantic) → `button.primary.bg` (component). CSS var нэр = зам `-`-ээр: `--color-accent`, `--button-primary-bg`.
+- **Tailwind v4 pipeline**: build-ээс гарсан semantic CSS var-уудыг `@theme { --color-accent: var(--color-accent-semantic) }` гэж бүртгэнэ — utility (`bg-accent`) ба raw `var()` хоёулаа нэг утгаас уншина. `@theme inline` — theme солигдох үед utility шууд дагадаг.
+- **Хувилбар**: token package-ийг (`@org/tokens`) npm-ээр semver-тэй гарга; token нэр устгах/солих = **major**, утга өөрчлөх = minor, шинэ token = patch. Changesets-ээр CHANGELOG автоматаар. Устгахаасаа өмнө нэг хувилбар `$deprecated` тэмдэглэ.
+- Жижиг проект (нэг платформ, нэг repo): JSON давхарга шаардлагагүй — шууд CSS var хангалттай. DTCG нь Figma + 2-оос олон платформ байхад л үнэ цэнтэй.
+
+## Эх сурвалж
+
+- W3C Design Tokens Community Group — Design Tokens Format Module — tr.designtokens.org/format/
+- Style Dictionary (Amazon) — v4 docs, DTCG support — styledictionary.com
+- Tokens Studio for Figma — docs.tokens.studio
+- Tailwind CSS v4 — Theme variables (`@theme`, `@theme inline`) — tailwindcss.com/docs/theme
+- shadcn/ui — Theming (semantic CSS variables) — ui.shadcn.com/docs/theming
+- MDN — Using CSS custom properties; `prefers-color-scheme`; `color-scheme`
+- Material 3 — Design tokens overview — m3.material.io/foundations/design-tokens
+- Changesets — github.com/changesets/changesets
+- Nathan Curtis (EightShapes) — «Naming Tokens in Design Systems»
