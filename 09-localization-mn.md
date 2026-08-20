@@ -13,7 +13,7 @@
 | IBM Plex Sans | ✓ | ✓ | Mono хувилбар нь ч кирилл-тэй |
 | Golos Text | ✓ | шалга | Орос гаралтай, кирилл сайн; Ө/Ү-г файл дээр баталгаажуул |
 | Manrope | ✓ | шалга | Үндсэн кирилл бий; extended-ийг шалга |
-| Geist | шалга | шалга | Эхний хувилбарууд Latin-only байсан; ашиглах хувилбараа заавал шалга |
+| Geist | ✓ | ✓ | Google Fonts хувилбар `cyrillic` + `cyrillic-ext` subset-тэй — Ө/Ү (U+04E8/04AE) `cyrillic-ext`-д, ₮ (U+20AE) `latin-ext`-д (2026-08-20 шалгасан). Self-host хийвэл ≥1.4 + cyrillic subset татах |
 | system-ui | ✓ | ✓ | SF Pro / Segoe UI / Roboto бүгд бүрэн |
 
 - **Font сонгохын өмнө `Өө Үү Ёё Hh` тест мөрийг тухайн font-оор render хийж хар** — fallback font руу унавал үсэг өөр өргөн/өндөртэй «үсрэлт» болж харагдана.

@@ -36,6 +36,10 @@
 - **Chart**: bar 0-ээс эхэлнэ; ≤6 hue; pie ≤5 хэсэг; өнгө дангаар мэдээлэл дамжуулахгүй.
 - **Landing**: 1 h1 · 1 primary CTA · LCP ≤2.5s · JS ≤150KB gz.
 
+## Хэрэгжүүлэлт
+
+Эдгээр дүрмийг хэрэгжүүлсэн компонентын сан: [`@craftzbay/ui`](https://github.com/craftzbay/craftzbay-ui) — showcase https://components.runestonetechnologies.com. Дүрэм энд, код тэнд; хоёр репо бие биенээ холбоосоор заана.
+
 ## Ашиглах урсгал
 
 1. `references/` — зорьж буй амтыг зургаар хар.
