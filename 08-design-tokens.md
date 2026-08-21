@@ -32,7 +32,7 @@ Tailwind utility нэр хаалтад (`@theme inline`-аар холбогдс�
 | `--foreground-subtle` | `hsl(215 16% 45%)` | `hsl(215 20% 65%)` | Caption, placeholder (≥4.5:1 background-muted дээр ч) |
 | `--border` | `hsl(214 32% 91%)` | `hsl(217 33% 17%)` | Divider, card border (чимэглэл) |
 | `--border-strong` | `hsl(213 27% 84%)` | `hsl(215 25% 27%)` | Тод хил |
-| `--border-input` | `hsl(215 16% 58%)` | `hsl(215 16% 42%)` | **Бүх interactive control-ийн хил** — 3.2:1 / 3.5:1 (WCAG 1.4.11) |
+| `--border-input` | `hsl(215 16% 55%)` | `hsl(215 16% 45%)` | **Бүх interactive control-ийн хил** — `background` дээр 3.55:1 / 3.88:1, `background-muted` дээр ч 3.24 / 3.28 (WCAG 1.4.11 бүх фон дээр) |
 | `--card` / `--card-foreground` | `hsl(0 0% 100%)` / `hsl(222 47% 11%)` | `hsl(222 47% 11%)` / `hsl(210 40% 98%)` | Card (dark-д background-subtle-аас нэг шат дээр) |
 | `--popover` / `--popover-foreground` | card-тай ижил | card-тай ижил | Dropdown, popover |
 | `--accent` (`bg-accent`) | `hsl(238 50% 49%)` (accent-600) | `hsl(238 60% 67%)` (accent-400) | Primary товч, линк, идэвхтэй төлөв (10%) |
@@ -94,7 +94,6 @@ Utility нэр: `bg-success` (solid) · `text-on-success` · `bg-success-soft` �
 | `--text-xs` | 0.75rem (12) | 1rem (16) | 0.005em | Caption, badge, table header — **доод хязгаар** |
 | `--text-sm` | 0.8125rem (13) | 1.25rem (20) | 0 | UI default (товч, input, menu) |
 | `--text-base` | 0.875rem (14) | 1.5rem (24) | 0 | Body (апп) |
-| `--text-md` | 0.9375rem (15) | 1.5rem | — | Урт тайлбар |
 | `--text-lg` | 1rem (16) | 1.5rem | −0.005em | Card title, landing body |
 | `--text-xl` | 1.125rem (18) | 1.75rem | −0.01em | H4 |
 | `--text-2xl` | 1.375rem (22) | 1.875rem | −0.015em | H3 |
