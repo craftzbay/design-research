@@ -1,8 +1,10 @@
+[← Индекс руу буцах](README.md)
+
 # Типограф
 
 ## Font family — 1-2, дээд тал нь 3
 
-- **1 font** — хамгийн аюулгүй: нэг sans-serif-ийн weight-үүдээр (400/500/600/700) бүх иерархийг гаргана. Орчин үеийн SaaS/dashboard-ууд ихэнх нь ингэдэг (Inter, Geist гэх мэт).
+- **1 font** — хамгийн аюулгүй: нэг sans-serif-ийн weight-үүдээр (**400/500/600** — 700 хэрэглэхгүй) бүх иерархийг гаргана. Default: **Geist** (кирилл + Ө/Ү `cyrillic-ext`-д ✓); Inter зөвхөн stack-ийн fallback, default биш.
 - **2 font** — сонгодог хослол: гарчигт display/serif, body-д sans. Маркетинг, контент сайтад сайн.
 - **3 дахь нь** зөвхөн monospace (код, дугаар, table-ийн тоо).
 
@@ -19,7 +21,9 @@
 | Perfect fourth | 1.333 | Маркетинг, landing page |
 | Golden ratio | 1.618 | Том hero-той editorial сайт |
 
-Жишээ: base 16px × 1.25 → `12.8 → 16 → 20 → 25 → 31 → 39 → 49`. Tailwind-ийн default scale яг энэ логикоор баригдсан.
+Жишээ: base 16px × 1.25 → `12.8 → 16 → 20 → 25 → 31 → 39 → 49`. Санамж: Tailwind-ийн default scale (12/14/16/18/20/24/30/36/48/60/72) нь modular **биш**, гараар сонгосон утгууд — modular scale хэрэгтэй бол `@theme`-д өөрөө тодорхойл.
+
+**Default (эргэлзвэл):** апп/dashboard **1.2 @ 14px**, маркетинг/контент **1.25 @ 16px**; нэг бүтээгдэхүүнд **≤8 хэмжээ** ашиглана. craftzbay-ui-ийн бодит scale 08-design-tokens.md-д.
 
 ## Font-size-ийн нэгж: px биш rem
 
@@ -31,7 +35,7 @@
 
 | Хэрэглээ | Хэмжээ | Тайлбар |
 |---|---|---|
-| Caption, badge, table header | 12px (0.75rem) | Үүнээс жижгийг бүү хэрэглэ |
+| Caption, badge, table header | 12px (0.75rem) | **Доод хязгаар** — бүх UI текстэд; ганц үл хамаарах: chart-ийн tick label 11px (11-data-viz.md) |
 | Secondary/UI text, dashboard body | 13-14px | Data-нягт UI-ийн ажлын морь |
 | Body (контент сайт) | 16-18px | Урт текстэд 16-аас доошгүй |
 | H4 / card title | 16-18px, 600 weight | |
@@ -73,37 +77,37 @@ h1 { font-size: clamp(2rem, 1rem + 3vw, 3.5rem); }
 
 ## Ерөнхий зөвшилцөл
 
-**1 font family (+mono) · 6-8 size · 3-4 weight · 2-3 color түвшин** — үүнээс цомхон систем бараг бүх UI-д хүрэлцдэг.
+**1 font family (+mono) · 6-8 size · 3 weight (400/500/600) · 2-3 color түвшин** — үүнээс цомхон систем бараг бүх UI-д хүрэлцдэг.
 
 Албан ёсны стандарт гэвэл WCAG л бий (хэмжээ биш contrast + 200% zoom шаарддаг). Material Design (13 түвшин), Apple HIG (11 түвшин) нь convention; практикт 6-8 л ашиглагддаг.
 
 ## Шрифт ачаалалт
 
 - **`font-display: swap`** — body/UI шрифтэд default. Чимэглэлийн, display-only шрифтэд `optional` (100ms-д ирэхгүй бол fallback-аар үлдэнэ, CLS үүсгэхгүй).
-- Preload зөвхөн **1-2 критик файл** (body 400 + 600 жишээ нь): `<link rel="preload" href="/fonts/inter-latin-cyr.woff2" as="font" type="font/woff2" crossorigin>`. `crossorigin`-гүй бол хоёр удаа татдаг. 3-аас олон preload нь бусад ресурсийг хойшлуулна.
+- Preload зөвхөн **1-2 критик файл** (body 400 + 600 жишээ нь): `<link rel="preload" href="/fonts/geist-400-cyrillic-ext.woff2" as="font" type="font/woff2" crossorigin>`. `crossorigin`-гүй бол хоёр удаа татдаг. 3-аас олон preload нь бусад ресурсийг хойшлуулна.
 - **Subsetting**: `unicode-range`-ээр latin + cyrillic тус тусад нь файл болгож, хэрэгтэйг нь л татуулна. Бүтэн Inter ~300KB vs latin+cyrillic subset ~60-80KB woff2.
 - **Variable font** — 4 static файлын оронд нэг файл (weight 100-900 + opsz); ихэвчлэн нийт байт ч бага. `font-weight: 100 900` гэж `@font-face`-д зарла.
 - **Metric-compatible fallback** — CLS-ийг 0 болгох аргачлал:
 
 ```css
 @font-face {
-  font-family: "Inter Fallback";
+  font-family: "Geist Fallback";
   src: local("Arial");
   size-adjust: 107%;
   ascent-override: 90%;
   descent-override: 22%;
   line-gap-override: 0%;
 }
-body { font-family: Inter, "Inter Fallback", system-ui, sans-serif; }
+body { font-family: Geist, "Geist Fallback", Inter, system-ui, sans-serif; }
 ```
 
 Утгыг гараар биш — Fontaine / Capsize / `next/font` автоматаар бодно.
 
-- **Self-host** сонго: Google Fonts хост нь 2020-оос хойш browser cache-ээ хуваалцдаггүй тул хурдны давуу тал байхгүй; CSP-д нэмэлт `font-src` нээх шаардлагагүй; GDPR-ийн IP дамжуулалтын асуудалгүй. `next/font`, Fontsource хоёулаа self-host хийдэг.
+- **Self-host** давуу: Google Fonts хост нь 2020-оос хойш browser cache-ээ хуваалцдаггүй тул хурдны давуу тал байхгүй; CSP-д нэмэлт `font-src` нээх шаардлагагүй; GDPR-ийн IP дамжуулалтын асуудалгүй. `next/font`, Fontsource хоёулаа self-host хийдэг. Google Fonts зөвшөөрөгдөнө — зөвхөн `preconnect` + `display=swap` + `cyrillic-ext` subset-тэй.
 - `font-synthesis: none` — 600 файл байхгүй үед browser «хуурамч bold/italic» зурахыг хориглоно; дутуу weight-ийг нүдээр илрүүлнэ.
-- Нийт шрифт байт: **≤100KB** критик замд, 4 файлаас илүүгүй.
+- Нийт шрифт байт: **≤100KB** критик замд; **≤4 woff2 файл** (≤2 weight × latin + cyrillic-ext subset). Weight 400/500/600-аас өөрийг ачаалахгүй.
 
-**Кирилл**: сонгосон шрифт бүр кирилл (U+0400-04FF) + монгол-тусгай **Ө (U+04E8/04E9), Ү (U+04AE/04AF)** үсгийг агуулж байгааг заавал шалга — олон latin-first шрифт (Geist, зарим display font) дутуу. Дутуу бол browser өөр шрифтээс нөхөж «холимог» харагдана. Дэлгэрэнгүй ба жагсаалт: 09-localization-mn.md-г үз.
+**Кирилл**: сонгосон шрифт бүр кирилл (U+0400-04FF) + монгол-тусгай **Ө (U+04E8/04E9), Ү (U+04AE/04AF)** үсгийг агуулж байгааг заавал шалга. Geist-д бий (`cyrillic-ext` subset, 2026-08-20 шалгасан) — гэхдээ subset-ээ ачаалахаа мартвал fallback руу унана; зарим display font-д огт байхгүй. Дутуу бол browser өөр шрифтээс нөхөж «холимог» харагдана. Дэлгэрэнгүй ба жагсаалт: 09-localization-mn.md-г үз.
 
 ## Эх сурвалж
 

@@ -1,3 +1,5 @@
+[← Индекс руу буцах](README.md)
+
 # Эх сурвалжууд
 
 Энэ репогийн дүрмүүд аль стандарт, аль эх сурвалжаас гарсныг нэг дор. Файл бүрийн төгсгөлд өөрийн эх сурвалж бий; энд нь нэгтгэсэн жагсаалт + хэрхэн хандах заавар.
@@ -6,11 +8,12 @@
 
 | Стандарт | Юу заадаг | Энд хэрэглэсэн |
 |---|---|---|
-| **WCAG 2.2** (W3C, 2023) — w3.org/TR/WCAG22 | Contrast, focus, keyboard, target size, reflow, motion | 01, 04, 05, 07, 13 |
+| **WCAG 2.2** (W3C, 2023) — w3.org/TR/WCAG22 | Contrast, focus, keyboard, target size, reflow, motion | 01, 04, 05, 07, 13, 15, 16 |
 | **WAI-ARIA 1.2 + APG** (Authoring Practices Guide) — w3.org/WAI/ARIA/apg | Компонентын semantic/keyboard хэв маяг (dialog, tabs, menu, combobox…) | 06, 07 |
-| **W3C Design Tokens (DTCG)** — designtokens.org | Токены JSON формат, alias, type | 08 |
+| **W3C Design Tokens Format Module 2025.10** — designtokens.org/TR | Токены JSON формат (object-утгатай `color`/`dimension`), alias, type | 08 |
 | **CSS спецификаци / MDN** — developer.mozilla.org | `clamp`, container query, `color-scheme`, `@starting-style`, OKLCH, logical properties | 02, 03, 05, 01 |
-| **Unicode CLDR** — cldr.unicode.org | `mn` locale-ийн огноо/тоо формат (ICU өгөгдөл дутуу байдгийн эх) | 09 |
+| **Unicode CLDR / ICU MessageFormat** — cldr.unicode.org | `mn` locale-ийн огноо/тоо/plural өгөгдөл (бий, гэхдээ гаралтын хэв маяг нь тохирохгүй тул fixed format) | 09, 16 |
+| **craftzbay-ui theme.css** — github.com/craftzbay/craftzbay-ui | Token нэр, light/dark бодит утга, motion/z/radius/shadow scale — энэ репогийн тоон эх сурвалж | 08, 14, бүгд |
 
 ## Платформын удирдамж (convention, стандарт биш)
 
@@ -29,10 +32,13 @@
 - **Okabe–Ito палитр** (2008) — colorblind-safe 8 өнгө; **Tableau 10** — categorical жишиг.
 - **Edward Tufte**, *The Visual Display of Quantitative Information* — data-ink ratio, chart junk.
 - **Inclusive Components** (Heydon Pickering) — компонент бүрийн accessible хэрэгжүүлэлт.
+- **GOV.UK Content style guide**, **Microsoft Writing Style Guide** — sentence case, алдааны мессеж, нэгж (16).
+- **Playwright, axe-core, Lighthouse CI, apca-w3, Stylelint** — 13-ийн автоматжуулалт.
 - **Every Layout** (Bell, Pickering) — algorithmic CSS layout.
 
 ## Хэрэглэх зарчим
 
-1. Зөрчилдвөл **WCAG > платформын удирдамж > практик зөвлөмж**. Жишээ: touch target — WCAG 24px (доод хязгаар), HIG 44 / M3 48 (зөвлөмж) → бид 44.
-2. Тоон утга бүр эх сурвалжтай байх ёстой; "ингэж санагдсан" дүрэм нэмэхгүй.
-3. Стандарт шинэчлэгдэхэд (WCAG 3, CSS шинэ feature) энэ файл + холбогдох баримтыг хамт шинэчил.
+1. Зөрчилдвөл **WCAG > платформын удирдамж > практик зөвлөмж**. Жишээ: pointer target — WCAG 24px (доод хязгаар, desktop/нягт dashboard-д бидний дүрэм), HIG 44 / M3 48 (зөвлөмж → touch-first дэлгэц, landing CTA-д 44).
+2. **Файлын давамгайлал**: pattern файл (10 dashboard, 11 data-viz, 12 landing) өөрийн домэйнд суурь файл (01–08)-ыг дарна. **Сэдэв бүр нэг эзэн файлтай** — анатоми 06, dashboard зан төлөв 10, формат 09, бичвэр 16, token утга 08, default тоо 14; бусад нь холбоос өгнө, давтахгүй. Тоо зөрвөл theme.css = 14 = README зөв.
+3. Тоон утга бүр эх сурвалжтай байх ёстой; "ингэж санагдсан" дүрэм нэмэхгүй.
+4. Стандарт шинэчлэгдэхэд (WCAG 3, CSS шинэ feature) энэ файл + холбогдох баримтыг хамт шинэчил.

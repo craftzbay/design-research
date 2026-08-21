@@ -1,3 +1,5 @@
+[← Индекс руу буцах](README.md)
+
 # Landing / маркетингийн сайт
 
 SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн нэг л зорилго — зочныг **нэг үйлдэл** рүү хөтлөх (бүртгүүлэх, demo захиалах, татах). Дизайны бүх шийдвэр энэ нэг үйлдлийг хурдан, ойлгомжтой, итгэлтэй болгоход үйлчилнэ. Өнгө, типограф, зай, компонентын суурь дүрэм бусад файлд — энд зөвхөн landing-д өвөрмөц дүрмүүд.
@@ -26,7 +28,7 @@ SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн н
 - Дэд гарчиг ≤25 үг: хэн, юу, яаж — гурвыг хариулна.
 - **CTA нэг primary** + заавал биш нэг secondary ghost («Demo үзэх»). Гурав дахь товч — алдаа.
 - Visual-ийн эрэмбэ: бодит product screenshot > өөрийн illustration > stock photo. Stock-ийн хүний гар барилцсан зураг — хориотой.
-- Hero өндрийг `100vh` гэж бүү хүчил: desktop 560-720px орчим, контент дагаж `min-height`. Доор хэсэг байгаа нь fold дээр мэдрэгдэх ёстой.
+- Hero-г бүтэн дэлгэц (`h-screen`, `dvh`-ийн 100%) болгож бүү хүчил: desktop 560-720px орчим, контент дагаж `min-height`. Доор хэсэг байгаа нь fold дээр мэдрэгдэх ёстой.
 - Autoplay видео, hero carousel хэрэглэхгүй (2 дахь slide-ыг <1% хүн хардаг); видео зайлшгүй бол `muted loop playsinline` + poster.
 
 ## Navigation
@@ -37,7 +39,7 @@ SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн н
 ## Section rhythm
 
 - Босоо padding: desktop **64-96px**, mobile **48-64px**. Хэсэг хооронд зайг нэг token-оор (`--space-section`) удирд.
-- Контейнер `max-width` 1140-1280px (03-spacing-layout.md-г үз); текст блок `max-width: 65ch`.
+- Контейнер `max-width` 1152-1280px (03-spacing-layout.md-г үз); текст блок `max-width: 65ch`.
 - Хэсэг ялгах: background-ийг `bg` / `surface` ээлжлүүл — border, divider хэрэггүй.
 - Хэсэг бүр: h2 (32-48px) → 1 өгүүлбэр тайлбар → контент. Eyebrow (12-13px uppercase muted) хэрэглэвэл бүх хэсэгт, эсвэл хаана ч үгүй.
 
@@ -45,7 +47,7 @@ SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн н
 
 - Primary CTA урт хуудсанд **3-4 удаа** давтагдана: hero, дунд (features-ийн дараа эсвэл pricing), final CTA, nav.
 - **Label бүх газар ижил** («Үнэгүй эхлэх» гэвэл хаа сайгүй яг тэр үгээр). Өөр үгтэй товч = өөр үйлдэл гэж уншигдана.
-- Товчны хэмжээ marketing горим: өндөр 44-48px, font 16px (06-components.md-г үз).
+- Товчны хэмжээ marketing горим: `xl` — өндөр 44px, font 16px, touch target ≥44×44 (06-components.md-г үз).
 - Final CTA хэсэг: h2 + 1 мөр + primary товч, өөр юу ч үгүй. Risk-reversal мөр («Карт шаардахгүй · 14 хоног үнэгүй») товчны доор 13-14px.
 
 ## Social proof
@@ -63,7 +65,7 @@ SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн н
 
 - Plan **≤4**; 3 нь оновчтой. Нэгийг «Санал болгох» гэж тэмдэглэнэ: badge + border accent эсвэл бага зэрэг том/өргөгдсөн.
 - Сар/жил toggle — жилийн хөнгөлөлтийг тоогоор харуул («2 сар үнэгүй», «-20%»), сонголтыг URL/ storage-д санах нь сонголт.
-- Үнэ том (36-48px), `font-variant-numeric: tabular-nums`; валют, хугацаа тодорхой (`₮49,000 /сар`). Монгол зах зээлд ₮ тэмдэг + мянгатын таслал (09-localization-mn.md-г үз).
+- Үнэ том (36-48px), `font-variant-numeric: tabular-nums`; валют, хугацаа тодорхой (`49,000₮ /сар`). ₮ ард, зайгүй + мянгатын таслал (09-localization-mn.md-г үз).
 - Feature жагсаалт plan тус бүрд **≤8 мөр**, дараа нь «Бүгдийг харьцуулах» линк → бүрэн хүснэгт.
 - Plan бүрд CTA: санал болгоход primary, бусдад secondary.
 
@@ -83,7 +85,7 @@ SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн н
 
 - 3-5 багана: Бүтээгдэхүүн / Компани / Нөөц / Legal; багана тус бүр ≤6 линк.
 - Legal линк заавал: Privacy, Terms (шаардлагатай бол Cookie); © он + нэр. Холбоо барих имэйл **олон нийтийн хаяг** (hello@, support@) — дотоод/хувийн хаягийг хэзээ ч тавихгүй.
-- Хэл солих (EN/MN) footer эсвэл nav-д; сонголт URL-д тусна (`/mn/`, `/en/`), cookie-д биш.
+- Хэл солих (EN/MN) footer эсвэл nav-д; public хуудсанд **URL эх сурвалж** (`/mn/`, `/en/`), cookie/localStorage биш (09-localization-mn.md).
 
 ## Landing дээрх форм
 
@@ -96,7 +98,7 @@ SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн н
 - Product screenshot бодит UI, бодит мэт дата («Lorem ipsum», «User 1» харагдахгүй). Illustration, icon, browser frame — тус бүр нэг л style (04-visual-details.md-г үз).
 - Формат WebP/AVIF, `<picture>`-ээр fallback; зураг бүрт `width`/`height` эсвэл `aspect-ratio` — CLS-ээс хамгаална.
 - **Hero зураг = LCP**: `<link rel="preload">` + `fetchpriority="high"` + `loading="eager"`; бусад бүх зураг `loading="lazy"`.
-- Reveal анимаци: opacity + translateY(12-16px), 300-400ms, **нэг л удаа** (`IntersectionObserver`, дахин scroll-д дахихгүй). `prefers-reduced-motion: reduce` → reveal-гүй, бүгд шууд харагдана (05-motion.md-г үз).
+- Reveal анимаци: opacity + translateY(12-16px), 240ms (`--duration-slow`), **нэг л удаа** (`IntersectionObserver`, дахин scroll-д дахихгүй). `prefers-reduced-motion: reduce` → reveal-гүй, бүгд шууд харагдана (05-motion.md-г үз).
 
 ## Performance budget
 
@@ -106,7 +108,7 @@ SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн н
 | INP | ≤200ms |
 | CLS | ≤0.1 |
 | Нийт JS (gzip) | ≤100-150KB |
-| Font файл | ≤2 (woff2, `font-display: swap`, subset) |
+| Font файл | ≤4 woff2 (≤2 weight × latin + cyrillic-ext; `font-display: swap`) |
 | Third-party script | Зөвхөн analytics, `defer`/`async`, consent-ийн дараа |
 
 - Chat widget, heatmap, A/B tool бүр 100-300KB нэмдэг — хэрэгтэй бол эхний interaction-ийн дараа ачаал.
@@ -138,12 +140,12 @@ SaaS product site, agency site, one-pager-т хамаарна. Landing-ийн н
 2. Primary CTA нэг label, 3-4 удаа давтагдсан; hero-д ≤2 товч.
 3. Lighthouse mobile: LCP ≤2.5s, INP ≤200ms, CLS ≤0.1; JS ≤150KB gz.
 4. Hero зураг preload + `fetchpriority="high"`, бусад lazy; бүх зурагт хэмжээ/aspect-ratio.
-5. Font ≤2 файл, woff2, swap; third-party зөвхөн analytics, defer.
+5. Font ≤4 woff2 (≤2 weight), swap, cyrillic-ext subset; third-party зөвхөн analytics, defer.
 6. OG 1200×630 зураг, canonical, sitemap, `lang`, EN/MN `hreflang`, JSON-LD validator-т алдаагүй.
 7. Privacy, Terms, холбоо барих бодит; дотоод имэйл хаяг байхгүй; © он зөв.
 8. Keyboard-аар nav → CTA → форм → FAQ бүгд хүрнэ, focus харагдана; contrast ≥4.5:1 (07-accessibility.md-г үз).
 9. Форм: validation, success төлөв, spam хамгаалалт ажиллаж, имэйл бодитоор ирж байгаа.
-10. 375px, 768px, 1280px, 1920px-д overflow, текст давхцал, зураг тасралт байхгүй; reduced-motion-д анимаци унтарна.
+10. 320 / 375 / 768 / 1280 / 1920px-д overflow, текст давхцал, зураг тасралт байхгүй; reduced-motion-д анимаци унтарна.
 
 ## Эх сурвалж
 

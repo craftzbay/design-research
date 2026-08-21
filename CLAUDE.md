@@ -4,10 +4,10 @@
 
 ## Стек ба бүтэц
 
-- Зөвхөн Markdown, root-д хавтгай байрласан, дугаарласан 14 баримт (`00-sources` … `13-checklist`) + `README.md` (агуулгын хүснэгт, cheat sheet, ашиглах урсгал) + `references/` (жишиг зургууд — амтны сан).
+- Зөвхөн Markdown, root-д хавтгай байрласан, дугаарласан 17 баримт (`00-sources` … `16-ux-writing-mn`) + `README.md` (агуулгын хүснэгт, cheat sheet, ашиглах урсгал) + `references/` (жишиг зургууд — амтны сан).
 - `_config.yml` — Jekyll (`jekyll-theme-cayman`, `jekyll-relative-links`); GitHub Pages өөрөө build хийнэ, локал build/test/lint байхгүй.
-- Нэмэлт баримтууд (2026-08-20): `09-localization-mn` (монгол хэл) · `10-dashboard-patterns` · `11-data-viz` · `12-landing` · `13-checklist` (pre-ship) · `00-sources`. Баримт бүр `## Эх сурвалж`-аар төгсдөг — шинэ дүрэм нэмэхдээ эх сурвалжгүй тоо бичихгүй.
-- Баримтууд: `01-color` (60-30-10, palette, contrast, dark) · `02-typography` (family, modular scale, rem, clamp) · `03-spacing-layout` (4/8px scale, breakpoint, grid) · `04-visual-details` (radius, shadow, border, icon) · `05-motion` (100-400ms, ease-out, transform+opacity) · `06-components` (товч, форм, table, 4 төлөв, modal/toast) · `07-accessibility` (WCAG 2.2 AA) · `08-design-tokens` (primitive→semantic→component, light/dark, Tailwind v4 `@theme`).
+- Нэмэлт баримтууд (2026-08-20/21): `09-localization-mn` (монгол хэл) · `10-dashboard-patterns` · `11-data-viz` · `12-landing` · `13-checklist` (pre-ship) · `14-defaults` (нэг мөр = нэг default) · `15-app-resilience` · `16-ux-writing-mn` · `00-sources`. Давамгайлал: pattern файл (10/11/12) өөрийн домэйнд суурь (01–08)-ыг дарна; сэдэв бүр нэг эзэн файлтай, бусад нь холбоос. Баримт бүр `## Эх сурвалж`-аар төгсдөг — шинэ дүрэм нэмэхдээ эх сурвалжгүй тоо бичихгүй.
+- Баримтууд: `01-color` (60-30-10, palette, contrast, dark) · `02-typography` (family, modular scale, rem, clamp) · `03-spacing-layout` (4/8px scale, breakpoint, grid) · `04-visual-details` (radius, shadow, border, icon) · `05-motion` (120/160/240ms token, ease-out, transform+opacity) · `06-components` (товч, форм, table, 5 төлөв, modal/toast) · `07-accessibility` (WCAG 2.2 AA) · `08-design-tokens` (primitive→semantic→component, light/dark, Tailwind v4 `@theme`).
 
 ## Бусад проектод хэрхэн ашиглах
 
@@ -24,5 +24,5 @@
 
 ## Шалгах
 
-- Markdown-ы relative холбоосууд бодит файл руу заадаг эсэх (`grep -o '](0[0-9]-[a-z-]*\.md)' README.md`).
+- Markdown-ы relative холбоосууд бодит файл руу заадаг эсэх (`grep -o '](\([0-9][0-9]-[a-z-]*\|README\)\.md)' *.md | sort -u`).
 - Push-ийн дараа GitHub Pages хуудас шинэчлэгдсэн эсэхийг харах; локал verify хэрэггүй.

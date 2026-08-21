@@ -1,3 +1,5 @@
+[← Индекс руу буцах](README.md)
+
 # Өгөгдлийн дүрслэл (Dashboard)
 
 ## Яагаад
@@ -23,7 +25,7 @@ Dashboard-ын chart нь чимэглэл биш — асуултад хари�
 
 ```
 Нийт орлого              ← label 12-13px, muted
-₮12.4M                   ← value 24-32px, 600 weight, tabular-nums
+12.4M₮                   ← value 24-32px, 600 weight, tabular-nums
 ▲ +8.2%  өмнөх сартай    ← delta: сум + өнгө + тэмдэг; харьцуулсан хугацаа 12px muted
 ▁▂▃▅▆█                   ← sparkline (заавал биш), 24-32px өндөр
 ```
@@ -50,7 +52,7 @@ Dashboard-ын chart нь чимэглэл биш — асуултад хари�
 - Товчлол: `1.2K`, `3.4M`, `1.1B` — tick бүрт бүтэн тоо бичихгүй. Нэгжийг tick бүрт биш тэнхлэгийн гарчигт («Орлого, ₮ сая»).
 - Gridline: зөвхөн хэвтээ (bar/line), 1px, border-subtle өнгө; босоо gridline ихэвчлэн хэрэггүй.
 - Chart junk-гүй: chart-ийн хүрээ (border) байхгүй, plot area-д дэвсгэр өнгө байхгүй, тэнхлэгийн шугам 1px эсвэл огт байхгүй, сүүдэр/gradient байхгүй.
-- Тэнхлэгийн label 11-12px muted; налуу (rotated) label-аас зайлсхий — хэвтээ bar эсвэл цөөн tick.
+- Тэнхлэгийн label 12px muted (tick-д 11px зөвшөөрнө — UI-ийн 12px доод хязгаарын цорын ганц үл хамаарах); налуу (rotated) label-аас зайлсхий — хэвтээ bar эсвэл цөөн tick.
 
 ## Label ба legend
 
@@ -69,7 +71,7 @@ Dashboard-ын chart нь чимэглэл биш — асуултад хари�
 ## Тоо, мөнгө, хугацаа
 
 - Тооны формат 09-localization-mn.md-г үз: мянгатын тусгаарлагч, ₮ тэмдэг.
-- Хувь **1 орон** (`8.2%`); мөнгө tile-д товчилсон (`₮12.4M`), tooltip-д бүтэн (`₮12,400,000`).
+- Хувь **1 орон** (`8.2%`); мөнгө tile-д товчилсон (`12.4M₮`), tooltip-д бүтэн (`12,400,000₮`) — ₮ үргэлж ард, зайгүй.
 - Хугацааны тэнхлэг: **нэг chart дотор нэг granularity** (өдөр ЭСВЭЛ 7 хоног ЭСВЭЛ сар); timezone **UTC+8** (Asia/Ulaanbaatar) — серверийн UTC-г шууд зурахгүй.
 - **Өгөгдөлгүй хугацаа = завсар**, 0 биш (`null` → line тасарна). 0 нь бодит хэмжилт.
 - Огнооны tick: эхний tick-д он/сар бүтэн, дараагийнхад зөвхөн өдөр («Мар 1, 2, 3…»).
@@ -95,7 +97,7 @@ Dashboard-ын chart нь чимэглэл биш — асуултад хари�
 - **Өгөгдлийн хүснэгт хувилбар** — «Хүснэгтээр харах» toggle эсвэл visually-hidden `<table>`; screen reader-т chart биш хүснэгт л уншигдана.
 - Mark-ийн contrast дэвсгэртэй **≥3:1** (WCAG 1.4.11), зэргэлдээ series хоорондоо ≥3:1 эсвэл pattern/border-оор тусгаарла.
 - Tooltip-ыг keyboard-оор (Tab/сум) хүрдэг, `prefers-reduced-motion`-д chart-ийн enter animation унтарна (05-motion.md-г үз).
-- Текст ≥11px, тэнхлэгийн label ≥4.5:1 (07-accessibility.md-г үз).
+- Текст ≥12px (tick label 11px зөвшөөрнө), тэнхлэгийн label ≥4.5:1 (07-accessibility.md-г үз).
 
 ## Performance
 
@@ -106,11 +108,11 @@ Dashboard-ын chart нь чимэглэл биш — асуултад хари�
 
 ## Сан (library)
 
-Нэг проектод **нэг л chart сан**. Сонголт: Recharts (React, SVG, энгийн dashboard) · Chart.js (canvas, хөнгөн, framework-agnostic) · ECharts (canvas, том өгөгдөл, олон төрөл) · d3 (бүрэн хяналт, custom дүрслэл; өртөг өндөр). Сангийн default theme-ийг бүү хэрэглэ — өнгө, font, gridline-ыг semantic token-оос (08-design-tokens.md-г үз).
+Нэг проектод **нэг л chart сан**. Default: **Recharts** (React, SVG) — chart бүрт ≤1,000 цэг үед; түүнээс дээш (лог, tick data, heatmap) **ECharts** (canvas). d3 зөвхөн custom дүрслэлд, Chart.js-ийг шинэ проектод сонгохгүй. Сангийн default theme-ийг бүү хэрэглэ — өнгө (`--chart-1…6`), font, gridline-ыг semantic token-оос (08-design-tokens.md-г үз).
 
 ## Annotation
 
-- **Зорилтын шугам** (goal/target): dashed 1px, muted өнгө, төгсгөлд label («Зорилт ₮10M»). Chart бүрт ≤1.
+- **Зорилтын шугам** (goal/target): dashed 1px, muted өнгө, төгсгөлд label («Зорилт 10M₮»). Chart бүрт ≤1.
 - **Үйл явдлын тэмдэг** (release, кампанит ажил): босоо 1px шугам эсвэл тэнхлэг дээрх marker + tooltip; ≤3 нэг chart-д.
 - Threshold бүс (доод/дээд хязгаар): 5-10% opacity-тай fill.
 - Annotation өгөгдлийн өнгөтэй давхцахгүй — саарал/foreground-muted.
@@ -122,7 +124,7 @@ Dashboard-ын chart нь чимэглэл биш — асуултад хари�
 3. Categorical ≤6 өнгө, colorblind-safe, нэг entity бүх chart-д нэг өнгө үү?
 4. Өнгөнөөс гадна label/pattern/сум/тэмдэг байна уу?
 5. KPI tile: label-value-delta-хугацаа дөрвүүлээ, tabular-nums уу?
-6. Loading skeleton / empty / error гурван төлөв байна уу; завсар 0 биш null уу?
+6. Loading / empty / error / success / permission-denied — 5 төлөвийн загвар (06-components.md) хэрэгжсэн үү; завсар 0 биш null уу?
 7. `<figure>` + aria-label + хүснэгт хувилбар, mark contrast ≥3:1 үү?
 8. >1,000 цэгт canvas + LTTB; нэг проектод нэг сан уу?
 

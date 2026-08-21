@@ -1,3 +1,5 @@
+[← Индекс руу буцах](README.md)
+
 # Spacing ба Layout
 
 ## Spacing scale — 4px/8px систем
@@ -19,10 +21,12 @@
 
 | Хэрэглээ | Max-width |
 |---|---|
-| Урт текст (blog, docs) | 65-75ch (~720px) |
-| Ерөнхий контент сайт | 1140-1280px |
-| Dashboard/ERP | 1440-1536px, эсвэл full-width + padding |
-| Форм | 400-560px |
+| Урт текст (prose, docs) | ≤65ch |
+| Форм, settings, текст хуудас | 720px |
+| Landing / мэдээний сайт container | 1152-1280px |
+| Dashboard content | fluid, дээд тал нь 1536px (table/chart бүтэн өргөн) |
+
+Auth card (400-440px) нь хуудас биш card — 10-dashboard-patterns.md-г үз.
 
 Хажуугийн padding: mobile 16px, tablet 24px, desktop 32px+.
 
@@ -50,7 +54,7 @@ sm: 640px · md: 768px · lg: 1024px · xl: 1280px · 2xl: 1536px
 - Хэвтээ scroll хэзээ ч үүсгэхгүй — өргөн контент (table, code) өөрийн `overflow-x: auto` саванд.
 - Зураг: `max-width: 100%; height: auto` + `aspect-ratio`-оор layout shift-ээс сэргийл.
 - Sidebar → mobile-д drawer/bottom nav болдог; table → card эсвэл хэвтээ scroll.
-- Touch target: 44×44px-ээс доошгүй (линк, товч, icon).
+- Pointer target: desktop/нягт dashboard-д **≥24×24px** (WCAG 2.2 AA); touch-first дэлгэц, landing CTA-д **≥44×44px**; хөрш target хооронд ≥8px.
 - Hover-т тулгуурласан UI mobile-д ажиллахгүй — чухал үйлдлийг hover-ийн цаана бүү нуу.
 
 ## Мэдэх ёстой нюансууд
@@ -70,7 +74,7 @@ sm: 640px · md: 768px · lg: 1024px · xl: 1280px · 2xl: 1536px
 
 `container-type: inline-size` тавьсан элементийн өргөн нь дотоод контентоос хамаарахаа болино — grid/flex child дээр тавихдаа `min-width: 0` шалга.
 
-- **`100vh` mobile-д хэрэглэхгүй** — URL bar нуугдах/гарахад утга хувьсаж доод хэсэг тасарна. Бүтэн дэлгэцийн layout: `min-height: 100dvh` (динамик); header/hero-д хөдөлгөөнгүй байлгах бол `100svh` (хамгийн жижиг). Fallback: `min-height: 100vh; min-height: 100dvh;`.
+- **`vh`-д суурилсан бүтэн өндөр хориотой** (Tailwind `h-screen`/`min-h-screen` ч мөн) — mobile-д URL bar нуугдах/гарахад утга хувьсаж доод хэсэг тасарна. Бүтэн дэлгэцийн layout: `min-height: 100dvh` (динамик); header/hero-д хөдөлгөөнгүй байлгах бол `100svh`. `dvh`-г бүх зорилтот browser дэмждэг (2023+) — fallback хэрэггүй.
 - **Safe area**: `<meta name="viewport" content="width=device-width, viewport-fit=cover">` + fixed элементэд `padding-bottom: max(16px, env(safe-area-inset-bottom))`. Bottom nav, toast, FAB-д заавал.
 - Hover-only affordance (hover-д гарч ирэх товч, tooltip)-ийг **`@media (hover: hover) and (pointer: fine)`**-аар хааж, touch-д үргэлж харагдуулна. `:hover` стиль л биш — туршилтын логик ч үүгээр салга.
 - `:has()` — JS-гүй layout төлөв: `.form:has(:invalid) .submit { opacity: .5 }`, `.layout:has(.sidebar[data-open])`, `.card:has(img)` гэх мэт. Сонгуур бүрийн зардал өндөр тул `body:has(...)` маягийн өргөн хүрээтэй хэрэглээг 2-3-аас хэтрүүлэхгүй.

@@ -1,120 +1,200 @@
+[← Индекс руу буцах](README.md)
+
 # Design Tokens
 
 ## Яагаад
 
-Hex, px утгуудыг код даяар тараавал theme солих, брэнд өөрчлөх боломжгүй болдог. Token = утгын **нэрлэсэн давхарга**; бүх стил token-оор дамжина.
+Hex, px утгуудыг код даяар тараавал theme солих, брэнд өөрчлөх боломжгүй болдог. Token = утгын **нэрлэсэн давхарга**; бүх стил token-оор дамжина. Энэ файлын нэр, утга бүр `craftzbay-ui/packages/ui/src/styles/theme.css`-ээс хуулагдсан (2026-08-21) — **эх сурвалж нь theme.css**, зөрвөл theme.css зөв, энд засна.
 
 ## Гурван давхаргын архитектур
 
 ```
-Primitive  →  Semantic  →  Component (заавал биш)
-blue-600      --color-accent   --button-bg
-gray-50       --color-bg       --card-bg
+Primitive (raw)        →  Semantic                 →  Component (заавал биш)
+--color-accent-600        --accent                    --button-primary-bg
+--color-neutral-100       --background-muted          --card-bg
 ```
 
-1. **Primitive** — түүхий утгууд: `--blue-600: #2563eb`, `--space-4: 16px`. Шууд UI-д хэрэглэхгүй.
-2. **Semantic** — утга учиртай нэр: `--color-bg`, `--color-surface`, `--color-border`, `--color-fg`, `--color-fg-muted`, `--color-accent`, `--color-danger`. **UI бүхэлдээ энэ давхаргаас уншина.**
-3. **Component** — том системд л хэрэгтэй: `--button-primary-bg`. Жижиг проектод алгасаж болно.
+1. **Primitive** — түүхий утгууд (`--color-neutral-50…950`, `--color-accent-50…950`, `--spacing-*`). Шууд UI-д хэрэглэхгүй.
+2. **Semantic** — утга учиртай нэр: `--background`, `--foreground`, `--border`, `--accent`… **UI бүхэлдээ энэ давхаргаас уншина.**
+3. **Component** — том системд л хэрэгтэй. craftzbay-ui-д байхгүй; жижиг проектод алгас.
 
-## Наад захын semantic багц
+## Semantic өнгө — light / dark бодит утгууд
+
+Tailwind utility нэр хаалтад (`@theme inline`-аар холбогдсон).
+
+| Token (utility) | Light | Dark | Хэрэглээ |
+|---|---|---|---|
+| `--background` (`bg-background`) | `hsl(0 0% 100%)` | `hsl(229 50% 6%)` | Хуудасны суурь (60%) |
+| `--background-subtle` | `hsl(210 40% 98%)` | `hsl(222 47% 9%)` | Sidebar, хоёрдогч бүс |
+| `--background-muted` | `hsl(210 40% 96%)` | `hsl(217 33% 13%)` | Table header, code, disabled фон |
+| `--foreground` (`text-foreground`) | `hsl(222 47% 11%)` | `hsl(210 40% 98%)` | Үндсэн текст (17.9:1 / 18.8:1) |
+| `--foreground-muted` | `hsl(215 19% 35%)` | `hsl(213 27% 84%)` | Хоёрдогч текст (7.4:1 / 13.3:1) |
+| `--foreground-subtle` | `hsl(215 16% 45%)` | `hsl(215 20% 65%)` | Caption, placeholder (≥4.5:1 background-muted дээр ч) |
+| `--border` | `hsl(214 32% 91%)` | `hsl(217 33% 17%)` | Divider, card border (чимэглэл) |
+| `--border-strong` | `hsl(213 27% 84%)` | `hsl(215 25% 27%)` | Тод хил |
+| `--border-input` | `hsl(215 16% 58%)` | `hsl(215 16% 42%)` | **Бүх interactive control-ийн хил** — 3.2:1 / 3.5:1 (WCAG 1.4.11) |
+| `--card` / `--card-foreground` | `hsl(0 0% 100%)` / `hsl(222 47% 11%)` | `hsl(222 47% 11%)` / `hsl(210 40% 98%)` | Card (dark-д background-subtle-аас нэг шат дээр) |
+| `--popover` / `--popover-foreground` | card-тай ижил | card-тай ижил | Dropdown, popover |
+| `--accent` (`bg-accent`) | `hsl(238 50% 49%)` (accent-600) | `hsl(238 60% 67%)` (accent-400) | Primary товч, линк, идэвхтэй төлөв (10%) |
+| `--accent-foreground` (`text-on-accent`) | `hsl(0 0% 100%)` | `hsl(229 50% 6%)` | Accent дээрх текст (7.7:1 / 5.4:1) |
+| `--accent-subtle` (`bg-accent-soft`) | `hsl(232 100% 97%)` | `hsl(238 50% 16%)` | Сонгогдсон мөр, soft badge |
+| `--accent-subtle-foreground` | `hsl(238 48% 40%)` | `hsl(234 71% 78%)` | Soft фон дээрх текст |
+| `--accent-hover` / `--accent-active` | `color-mix(in oklab, var(--accent) 88%/78%, black)` | `… white)` | Товчны hover/active — шинэ hex биш |
+| `--surface-hover` / `--surface-active` | `hsl(214 32% 91%)` / `hsl(213 27% 84%)` | `hsl(217 33% 17%)` / `hsl(215 25% 27%)` | Мөр, menu item hover |
+| `--overlay` | `hsl(229 50% 6% / 0.6)` | `hsl(229 50% 6% / 0.7)` | Modal backdrop |
+| `--tooltip` / `--tooltip-foreground` | `hsl(222 47% 11%)` / `hsl(210 40% 98%)` | урвуу | Tooltip (inverted) |
+| `--ring` | `hsl(238 55% 58%)` (accent-500) | `hsl(238 60% 67%)` (accent-400) | Focus ring |
+| `--ring-offset` | `hsl(0 0% 100%)` | `hsl(229 50% 6%)` | Давхар ring-ийн дотоод давхарга |
+| `--selection` / `--selection-foreground` | `hsl(232 100% 94%)` / `hsl(238 48% 40%)` | `hsl(238 43% 32%)` / `hsl(232 100% 97%)` | `::selection` |
+| `--chart-1…6` | `hsl(217 70% 50%)`, `hsl(162 66% 29%)`, `hsl(38 92% 40%)`, `hsl(0 72% 45%)`, `hsl(215 16% 47%)`, `hsl(262 52% 55%)` | `hsl(217 80% 68%)`, `hsl(162 60% 55%)`, `hsl(38 92% 60%)`, `hsl(0 80% 68%)`, `hsl(215 20% 65%)`, `hsl(262 70% 75%)` | Categorical series — chart-1 нь accent **биш** (11-data-viz.md) |
+
+### Статусын 4 шаттай мини scale
+
+Статус бүр `subtle` (фон) · `border` · `foreground` (soft фон дээрх текст / бие даасан текст) · `solid` (fill) · `on-*` (solid дээрх текст):
+
+| Статус | Light: subtle / border / foreground / solid / on | Dark: subtle / border / foreground / solid / on |
+|---|---|---|
+| success | `hsl(152 76% 96%)` / `hsl(152 64% 80%)` / `hsl(163 70% 26%)` / `hsl(162 66% 29%)` / цагаан | `hsl(165 80% 8%)` / `hsl(163 70% 18%)` / `hsl(154 60% 64%)` / `hsl(157 55% 50%)` / `hsl(229 50% 6%)` |
+| warning | `hsl(48 100% 96%)` / `hsl(45 95% 78%)` / `hsl(23 75% 33%)` / `hsl(26 80% 40%)` / цагаан | `hsl(20 60% 10%)` / `hsl(22 70% 26%)` / `hsl(40 92% 65%)` / `hsl(35 90% 56%)` / `hsl(229 50% 6%)` |
+| danger | `hsl(0 86% 97%)` / `hsl(0 96% 89%)` / `hsl(0 74% 42%)` / `hsl(0 72% 51%)` / цагаан | `hsl(0 75% 12%)` / `hsl(0 70% 35%)` / `hsl(0 91% 71%)` / `hsl(0 84% 60%)` / `hsl(229 50% 6%)` |
+| info | `hsl(232 100% 97%)` / `hsl(233 79% 87%)` / `hsl(238 48% 40%)` / `hsl(238 50% 49%)` / цагаан | `hsl(238 50% 16%)` / `hsl(238 43% 32%)` / `hsl(234 71% 78%)` / `hsl(238 60% 67%)` / `hsl(229 50% 6%)` |
+
+Utility нэр: `bg-success` (solid) · `text-on-success` · `bg-success-soft` · `text-success` · `border-success`. `--danger-hover`/`--danger-active` нь `--accent-hover`-той ижил `color-mix` дүрмээр.
+
+## Өнгөнөөс гадна — бодит утгууд
+
+**Spacing** (`--spacing-*`, rem; Tailwind `p-4` = `--spacing-4`): `0`, `px`(1px), `0_5`(2), `1`(4), `1_5`(6), `2`(8), `2_5`(10), `3`(12), `4`(16), `5`(20), `6`(24), `8`(32), `10`(40), `12`(48), `16`(64), `20`(80), `24`(96), `32`(128). Card padding 16/24 → `--spacing-4`/`--spacing-6`; 20 (`--spacing-5`) нь зөвхөн дотоод зайд, card padding-д биш.
+
+**Radius**: `--radius-none` 0 · `--radius-sm` 4px · `--radius-md` 6px · `--radius-lg` 8px · `--radius-xl` 12px · `--radius-full` 9999px. (16px/`rounded-2xl` байхгүй — PHILOSOPHY хориотой.)
+
+**Shadow** (neutral, 2 давхар, зөвхөн хөвөгч surface):
 
 ```css
-:root {
-  /* фон */
-  --bg: ...;            /* хуудасны суурь (60%) */
-  --surface: ...;       /* card, panel (30%) */
-  --surface-hover: ...;
-  /* текст */
-  --fg: ...;            /* үндсэн текст */
-  --fg-muted: ...;      /* хоёрдогч */
-  --fg-subtle: ...;     /* caption, placeholder */
-  /* бусад */
-  --border: ...;
-  --accent: ...;        /* 10% */
-  --accent-fg: ...;     /* accent дээрх текст */
-  --danger: ...; --success: ...; --warning: ...;
-}
+--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+--shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+--shadow-lg: 0 12px 24px -6px rgb(0 0 0 / 0.08), 0 4px 8px -4px rgb(0 0 0 / 0.04);
+--shadow-xl: 0 24px 48px -12px rgb(0 0 0 / 0.12), 0 8px 16px -8px rgb(0 0 0 / 0.06);
 ```
 
-## Light/Dark theming
+**Z-index** (зөвхөн token, тоо шууд бичихгүй): `--z-dropdown` 1000 · `--z-sticky` 1100 · `--z-overlay` 1200 · `--z-modal` 1300 · `--z-popover` 1400 · `--z-toast` 1500 · `--z-tooltip` 1600. Давхаргын дараалал, top-layer харилцаа — 15-app-resilience.md.
 
-```css
-:root { --bg: #fafafa; --fg: #18181b; ... }
+**Motion**: `--duration-fast` 120ms · `--duration-base` 160ms · `--duration-slow` 240ms; `--ease-in` `cubic-bezier(0.4,0,1,1)` · `--ease-out` `cubic-bezier(0,0,0.2,1)` · `--ease-in-out` `cubic-bezier(0.4,0,0.2,1)`.
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --bg: #09090b; --fg: #fafafa; ... }
-}
-:root[data-theme="dark"] { --bg: #09090b; --fg: #fafafa; ... }
+**Breakpoints**: `--breakpoint-sm` 640 · `md` 768 · `lg` 1024 · `xl` 1280 · `2xl` 1536.
+
+**Font**: `--font-sans` `'Geist', ui-sans-serif, system-ui, …`; `--font-mono` `'Geist Mono', ui-monospace, …`; weight зөвхөн `--font-weight-normal` 400 · `medium` 500 · `semibold` 600.
+
+### Текстийн scale ба `--text-*--line-height` конвенц
+
+Хэмжээ бүр **гурвалсан token**: `--text-{n}` (size) · `--text-{n}--line-height` · `--text-{n}--letter-spacing`. Tailwind v4 `text-sm` utility нь гурвууланг нь нэг дор тавьдаг — тиймээс `text-sm leading-6` гэж line-height-ийг тусад нь дарах нь scale-ээс гарч байна гэсэн үг; хэрэгтэй бол шинэ шат нэм, дарахгүй. Raw `var()` бичихдээ ч хоёуланг нь хамт: `font-size: var(--text-sm); line-height: var(--text-sm--line-height)`.
+
+| Token | Size | Line-height | Tracking | Хэрэглээ |
+|---|---|---|---|---|
+| `--text-xs` | 0.75rem (12) | 1rem (16) | 0.005em | Caption, badge, table header — **доод хязгаар** |
+| `--text-sm` | 0.8125rem (13) | 1.25rem (20) | 0 | UI default (товч, input, menu) |
+| `--text-base` | 0.875rem (14) | 1.5rem (24) | 0 | Body (апп) |
+| `--text-md` | 0.9375rem (15) | 1.5rem | — | Урт тайлбар |
+| `--text-lg` | 1rem (16) | 1.5rem | −0.005em | Card title, landing body |
+| `--text-xl` | 1.125rem (18) | 1.75rem | −0.01em | H4 |
+| `--text-2xl` | 1.375rem (22) | 1.875rem | −0.015em | H3 |
+| `--text-3xl` | 1.75rem (28) | 2.125rem | −0.02em | H2 / апп page title |
+| `--text-4xl` | 2.25rem (36) | 2.5rem | −0.025em | H1 |
+| `--text-5xl` | 3rem (48) | 1.1 | −0.03em | Landing h1 |
+| `--text-6xl` | 3.75rem (60) | 1.05 | −0.035em | Hero |
+| `--text-7xl` | 4.5rem (72) | 1.05 | −0.04em | Hero (том) |
+
+Нэг бүтээгдэхүүнд эндээс **≤8** шат ашигла (02-typography.md).
+
+## Theming — `.dark` class + pre-paint script
+
+- Theme = `<html class="dark">` — `@custom-variant dark (&:where(.dark, .dark *))`. `data-theme` attribute, `prefers-color-scheme`-ээр token дарах хувилбар **хэрэглэхгүй** (3 төлөвийг нэг газар шийдэхийн тулд).
+- Гурван төлөв: `light` / `dark` / `system` — `localStorage.theme` (байхгүй = system). Сонголт нь density-той адил төхөөрөмжийн тохиргоо тул localStorage (10-dashboard-patterns.md → Тохиргоо хаана хадгалагдах).
+- `:root { color-scheme: light } .dark { color-scheme: dark }` — native control, scrollbar дагана.
+- **Pre-paint script** `<head>`-д, stylesheet-ийн дараа, app bundle-аас өмнө; гадаад файл (CSP `unsafe-inline`-гүй):
+
+```js
+// /theme-init.js — craftzbay-ui apps/site/public
+try {
+  var stored = localStorage.getItem('theme');
+  var prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+  var theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+  if (theme === 'dark') document.documentElement.classList.add('dark');
+  var accent = localStorage.getItem('brand');
+  if (accent && accent !== 'default') document.documentElement.setAttribute('data-accent', accent);
+} catch {}
 ```
 
-- Гурван төлөв: system (default) / гараар light / гараар dark — `data-theme` attribute нь хэрэглэгчийн сонголтыг media query-гээс дээгүүр тавина.
-- Компонент код theme мэдэхгүй — зөвхөн semantic token хэрэглэнэ.
-- Dark-д: цэвэр хар биш neutral-900/950; accent-ийн saturation бууруулж lightness нэмнэ; shadow-ийн оронд surface цайралт.
-
-## Өнгөнөөс гадна юуг token болгох
-
-- **Spacing**: `--space-1..10` (4px scale)
-- **Radius**: `--radius-sm/md/lg/full`
-- **Shadow**: `--shadow-sm/md/lg`
-- **Font**: `--font-sans/--font-mono`, `--text-xs..4xl`, `--leading-tight/normal`
-- **Z-index**: `--z-dropdown: 50; --z-modal: 100; --z-toast: 150` — «z-index дайн»-аас сэргийлнэ
-- **Duration/easing**: `--duration-fast: 150ms; --ease-out: cubic-bezier(0,0,.2,1)`
+- `system` төлөвт `matchMedia(...).addEventListener('change', …)` сонсож class-ыг амьд шинэчил.
+- Accent preset (`data-accent="blue|violet|emerald|rose|amber"`) зөвхөн accent ramp-ийг сольдог; neutral, статус өнгө хуваалцагдана. Шинэ брэнд = шинэ preset блок, компонент код өөрчлөгдөхгүй.
+- Компонент код theme мэдэхгүй — зөвхөн semantic token. Dark-д: цэвэр хар биш neutral-950; accent-600 → accent-400; shadow-ийн оронд surface шат (04-visual-details.md).
 
 ## Tailwind-тай хэрхэн зохицох
 
-Tailwind v4-д `@theme`-ээр CSS variable тодорхойлоод utility нь тэндээс уншина:
+Raw token `@theme`-д, semantic нь `:root`/`.dark`-д энгийн custom property, дараа нь `@theme inline`-аар utility болгоно:
 
 ```css
-@theme {
-  --color-accent: var(--accent);
-  --color-surface: var(--surface);
-}
-/* дараа нь bg-surface, text-accent гэж хэрэглэнэ */
+@theme { --color-accent-600: hsl(238 50% 49%); --radius-md: 6px; }
+:root  { --accent: var(--color-accent-600); }
+.dark  { --accent: hsl(238 60% 67%); }
+@theme inline { --color-accent: var(--accent); }   /* bg-accent, text-accent */
 ```
 
-shadcn/ui яг энэ хэв маягаар (semantic HSL variables + Tailwind) баригдсан — практик жишээ болгон харахад тохиромжтой.
+`@theme inline` заавал — утга нь `var()` тул theme солигдоход utility шууд дагана. shadcn/ui ч ижил загвар (2025-оос OKLCH утгатай semantic variable + `@theme inline`).
 
 ## Дүрэм
 
 1. Компонент дотор hex/px шууд бичихгүй — заавал token.
-2. Token нэр нь **юунд** хэрэглэгдэхийг хэлнэ, **ямар өнгө** болохыг биш (`--color-blue` ✗, `--color-accent` ✓).
+2. Token нэр нь **юунд** хэрэглэгдэхийг хэлнэ, **ямар өнгө** болохыг биш (`--color-blue` ✗, `--accent` ✓).
 3. Шинэ token нэмэхээсээ өмнө байгаагаа эргэж хар — token-ийн тоо өсөх нь системийн үнэ цэнийг бууруулдаг.
+4. Контраст нь token-ийн хариуцлага: semantic хос бүр (`foreground-subtle` × `background-muted`, `border-input` × `background`, `on-*` × `*-solid`) theme.css-ийн толгойд бичсэн ratio-тай; утга солиход ratio-г дахин тооц (13-checklist.md → contrast lint).
 
 ## W3C DTCG формат ба tooling
 
-Token-ийг CSS-д биш **платформ-хамааралгүй JSON**-д хадгалаад Figma, CSS, iOS, Android руу build хийдэг. Стандарт: **W3C Design Tokens Community Group (DTCG) format** (2025-10-д 1.0 стабил).
+Token-ийг CSS-д биш **платформ-хамааралгүй JSON**-д хадгалаад Figma, CSS, iOS, Android руу build хийдэг. Стандарт: **Design Tokens Format Module 2025.10** (designtokens.org/TR/). 2025.10-аас `dimension` ба `color` утга **объект** боллоо — хуучин `"16px"`, `"#2563eb"` string хэлбэр хүчингүй:
 
 ```json
 {
   "color": {
-    "blue": { "600": { "$value": "#2563eb", "$type": "color" } },
     "accent": {
-      "$value": "{color.blue.600}",
+      "600": {
+        "$type": "color",
+        "$value": { "colorSpace": "srgb", "components": [0.306, 0.373, 0.769], "hex": "#4e5fc4", "alpha": 1 }
+      }
+    },
+    "action": {
       "$type": "color",
+      "$value": "{color.accent.600}",
       "$description": "Primary action, links (10%)"
     }
   },
-  "space": { "4": { "$value": "16px", "$type": "dimension" } }
+  "spacing": {
+    "4": { "$type": "dimension", "$value": { "value": 16, "unit": "px" } }
+  },
+  "duration": {
+    "base": { "$type": "duration", "$value": { "value": 160, "unit": "ms" } }
+  }
 }
 ```
 
-- `$value`, `$type` заавал; `$description` зөвлөмж. Alias `{color.blue.600}` = гурван давхаргын холбоос (primitive → semantic) файлд өөрт нь шингэнэ.
-- `$type`-ууд: `color`, `dimension`, `fontFamily`, `fontWeight`, `duration`, `cubicBezier`, `number`, `shadow`, `typography` (composite).
-- **Build**: Style Dictionary v4 (DTCG-г шууд уншина) → `tokens.css` (`:root { --color-accent: … }`), мөн `.ts`, Swift, Kotlin. Tokens Studio (Figma plugin) тэр JSON-ийг Figma variables ↔ git repo хоёр тийш sync хийнэ → **Figma ба код нэг эх сурвалжтай**.
-- Theme = тусдаа set: `tokens/core.json` (primitive) + `tokens/light.json` + `tokens/dark.json` (semantic alias л өөр). Build нь `:root` ба `[data-theme="dark"]` блок хоёрыг гаргана.
-- Нэрлэлтийн давхарга JSON зам болно: `color.blue.600` (primitive) → `color.accent` (semantic) → `button.primary.bg` (component). CSS var нэр = зам `-`-ээр: `--color-accent`, `--button-primary-bg`.
-- **Tailwind v4 pipeline**: build-ээс гарсан semantic CSS var-уудыг `@theme { --color-accent: var(--color-accent-semantic) }` гэж бүртгэнэ — utility (`bg-accent`) ба raw `var()` хоёулаа нэг утгаас уншина. `@theme inline` — theme солигдох үед utility шууд дагадаг.
-- **Хувилбар**: token package-ийг (`@org/tokens`) npm-ээр semver-тэй гарга; token нэр устгах/солих = **major**, утга өөрчлөх = minor, шинэ token = patch. Changesets-ээр CHANGELOG автоматаар. Устгахаасаа өмнө нэг хувилбар `$deprecated` тэмдэглэ.
-- Жижиг проект (нэг платформ, нэг repo): JSON давхарга шаардлагагүй — шууд CSS var хангалттай. DTCG нь Figma + 2-оос олон платформ байхад л үнэ цэнтэй.
+- `$value`, `$type` заавал; `$description`, `$deprecated` (boolean эсвэл шалтгааны string), `$extensions` (reverse-domain түлхүүр: `"com.craftzbay.figma"`) сонголт. Group = `$value`-гүй объект; `$type`-ыг group дээр тавьбал доторх token-ууд өвлөнө.
+- Alias `{color.accent.600}` = primitive → semantic холбоос файлд өөрт нь шингэнэ.
+- `$type`-ууд: `color`, `dimension`, `fontFamily`, `fontWeight`, `duration`, `cubicBezier`, `number`, `shadow`, `typography`, `border`, `gradient`, `transition` (composite).
+- **Build**: Style Dictionary v4/v5 (DTCG-г шууд уншина) → `tokens.css` (`:root { --accent: … }` + `.dark { … }`), `.ts`, Swift, Kotlin. Tokens Studio (Figma plugin) тэр JSON-ийг Figma variables ↔ git хоёр тийш sync → **Figma ба код нэг эх сурвалжтай**.
+- Theme = тусдаа set: `tokens/core.json` (primitive) + `tokens/light.json` + `tokens/dark.json` (semantic alias л өөр). Build нь `:root` ба `.dark` блок хоёрыг гаргана.
+- Нэрлэлтийн давхарга JSON зам болно: `color.accent.600` (primitive) → `color.action` (semantic) → `button.primary.bg` (component). CSS var нэр = зам `-`-ээр.
+- **Хувилбар** (`@org/tokens`, semver): token нэр устгах/солих = **major**; шинэ token нэмэх = **minor**; утга өөрчлөх = **patch**, гэхдээ харагдац мэдэгдэхүйц өөрчлөгдвөл (accent hue, radius scale) = **minor + CHANGELOG-д «visual breaking» тэмдэглэл**. Устгахаасаа өмнө нэг хувилбар `$deprecated` тэмдэглэ. Changesets-ээр CHANGELOG автоматаар.
+- Жижиг проект (нэг платформ, нэг repo): JSON давхарга шаардлагагүй — theme.css шиг шууд CSS var хангалттай. DTCG нь Figma + 2-оос олон платформ байхад л үнэ цэнтэй.
 
 ## Эх сурвалж
 
-- W3C Design Tokens Community Group — Design Tokens Format Module — tr.designtokens.org/format/
-- Style Dictionary (Amazon) — v4 docs, DTCG support — styledictionary.com
+- craftzbay-ui — `packages/ui/src/styles/theme.css`, `apps/site/public/theme-init.js`, `packages/ui/docs/PHILOSOPHY.md` — github.com/craftzbay/craftzbay-ui
+- W3C Design Tokens Community Group — Design Tokens Format Module 2025.10 — designtokens.org/TR/drafts/format/ (2026-08-21 шалгасан)
+- Style Dictionary — DTCG support — styledictionary.com
 - Tokens Studio for Figma — docs.tokens.studio
-- Tailwind CSS v4 — Theme variables (`@theme`, `@theme inline`) — tailwindcss.com/docs/theme
-- shadcn/ui — Theming (semantic CSS variables) — ui.shadcn.com/docs/theming
-- MDN — Using CSS custom properties; `prefers-color-scheme`; `color-scheme`
+- Tailwind CSS v4 — Theme variables (`@theme`, `@theme inline`), `@custom-variant` — tailwindcss.com/docs/theme
+- shadcn/ui — Theming (OKLCH semantic CSS variables) — ui.shadcn.com/docs/theming
+- MDN — Using CSS custom properties; `color-scheme`; `color-mix()`
 - Material 3 — Design tokens overview — m3.material.io/foundations/design-tokens
 - Changesets — github.com/changesets/changesets
 - Nathan Curtis (EightShapes) — «Naming Tokens in Design Systems»

@@ -1,3 +1,5 @@
+[← Индекс руу буцах](README.md)
+
 # Accessibility
 
 Албан ёсны цорын ганц «стандарт» бол **WCAG 2.2** (AA түвшин нь практик жишиг). Бусад нь convention.
@@ -6,9 +8,9 @@
 
 - Энгийн текст (<24px): **≥4.5:1**
 - Том текст (≥24px эсвэл ≥18.7px bold): **≥3:1**
-- UI компонент, icon, input border (non-text): **≥3:1**
+- UI компонент, icon, input border (non-text): **≥3:1** — тэр элемент суудаг **бүх** фон дээр (`--background`, `--background-muted`, card, sidebar); нэг фон дээр л шалгаад орхихгүй.
 - Disabled төлөв contrast шаардлагаас чөлөөлөгддөг — гэхдээ уншигдахуйц байлга.
-- Шалгах: browser DevTools, эсвэл APCA (шинэ үеийн алгоритм, WCAG 3-д орно).
+- Шалгах: WCAG ratio — Chrome DevTools color picker, axe DevTools; APCA (нэмэлт, WCAG 3 draft) — apcacontrast.com эсвэл `apca-w3` npm (`import { APCAcontrast, sRGBtoY } from 'apca-w3'`) — token бүрийг CI-д lint хийх (13-checklist.md).
 
 ## Zoom ба хэмжээ
 
@@ -19,7 +21,7 @@
 ## Keyboard
 
 - Бүх interactive элемент Tab-аар хүрэгдэж, Enter/Space-ээр ажиллана.
-- **Focus-visible** төлөв тод байх: 2px outline + 2px offset, accent өнгөөр. `outline: none`-ыг орлуулах юмгүйгээр бүү бич.
+- **Focus-visible** төлөв: `outline: 2px solid var(--ring); outline-offset: 2px` — accent өнгө, хөрш өнгөнөөсөө ≥3:1. Accent-fill товч (primary) дээр ганц ring фонтойгоо нийлнэ → **давхар ring**: `box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring)`. `outline: none`-ыг орлуулах юмгүйгээр бүү бич; `:focus` биш `:focus-visible`.
 - Tab дараалал нь визуал дарааллыг дагана; `tabindex` эерэг утгаар бүү хэрэглэ.
 - Modal — focus trap; хаагдахад анхны trigger рүү focus буцаана.
 - Skip link («Гол контент руу») — nav ихтэй хуудсанд.
@@ -39,7 +41,7 @@
 
 ## Touch
 
-- Touch target: WCAG 2.2 доод хэмжээ **≥24×24px** (SC 2.5.8, AA); практик зөвлөмж **44×44px** (Apple HIG) / 48px (Material) — эдгээр нь илүү чанга convention. Жижиг текстэн линк ч padding-аар хүрнэ.
+- Pointer target: desktop/нягт dashboard-д **≥24×24px** (WCAG 2.2 SC 2.5.8, AA — бидний доод хязгаар); touch-first дэлгэц, landing CTA-д **≥44×44px** (HIG 44 / M3 48 convention). Жижиг текстэн линк ч padding-аар хүрнэ.
 - Target хоорондын зай ≥8px — андуурч дарахаас сэргийлнэ.
 
 ## Motion

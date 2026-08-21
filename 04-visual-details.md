@@ -1,3 +1,5 @@
+[← Индекс руу буцах](README.md)
+
 # Visual нарийн ширийн — radius, shadow, border, icon
 
 ## Border radius
@@ -6,12 +8,13 @@
 
 | Хэрэглээ | Утга |
 |---|---|
-| Жижиг элемент (badge, checkbox, tag) | 4px |
-| Товч, input, select | 6-8px |
-| Card, modal, popover | 8-16px |
-| Avatar, pill товч | 9999px (full) |
+| `--radius-sm` — badge, checkbox, tag | 4px |
+| `--radius-md` — товч, input, select | 6px |
+| `--radius-lg` — card, dropdown, popover | 8px |
+| `--radius-xl` — modal, drawer, том card | 12px |
+| `--radius-full` — avatar, pill | 9999px |
 
-- **Дотоод radius = гадаад radius − padding**: card 16px radius, padding 8px бол доторх зураг 8px radius байж нүдэнд зөв харагдана. Ижил утга давхарлавал дотоод булан «бүдүүн» харагддаг.
+- **Дотоод radius = гадаад radius − padding**: card 12px radius, padding 8px бол доторх зураг 4px radius байж нүдэнд зөв харагдана. Ижил утга давхарлавал дотоод булан «бүдүүн» харагддаг.
 - Нэг брэнд-шийдвэр: sharp (0-4px, «ноцтой» ERP/fintech маяг) vs rounded (8-16px, найрсаг SaaS маяг) — хольж болохгүй.
 
 ## Shadow / Elevation
@@ -20,15 +23,17 @@ Shadow нь «гоёл» биш **давхаргын мэдээлэл** — юу
 
 | Түвшин | Хэрэглээ | Жишээ |
 |---|---|---|
-| xs | Товч, input | `0 1px 2px rgb(0 0 0 / 0.05)` |
-| sm | Card | `0 1px 3px rgb(0 0 0 / 0.1)` |
-| md | Dropdown, popover | `0 4px 12px rgb(0 0 0 / 0.1)` |
-| lg | Modal, drawer | `0 16px 48px rgb(0 0 0 / 0.15)` |
+| `--shadow-xs` | (бараг хэрэглэхгүй) | `0 1px 2px 0 rgb(0 0 0 / 0.04)` |
+| `--shadow-sm` | Hover-той card | `0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04)` |
+| `--shadow-md` | Dropdown, popover | `0 4px 8px -2px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04)` |
+| `--shadow-lg` | Drawer, command palette | `0 12px 24px -6px rgb(0 0 0 / 0.08), 0 4px 8px -4px rgb(0 0 0 / 0.04)` |
+| `--shadow-xl` | Том marketing overlay (modal = lg) | `0 24px 48px -12px rgb(0 0 0 / 0.12), 0 8px 16px -8px rgb(0 0 0 / 0.06)` |
 
-- Чанартай shadow нь **2-3 давхар**: нэг жижиг тод (contact) + нэг том бүдэг (ambient). `0 1px 2px rgb(0 0 0/.06), 0 4px 12px rgb(0 0 0/.08)`.
+- Shadow **зөвхөн хөвөгч (floating) surface-д** — тайван card, товч, input-д shadow биш 1px border.
+- Чанартай shadow нь **2 давхар**: нэг жижиг тод (contact) + нэг том бүдэг (ambient) — дээрх утгууд яг ийм.
 - Гэрэл **дээрээс** тусдаг гэж үзнэ — y-offset эерэг, x-offset 0.
-- Хар saturation-гүй биш, суурь өнгөний hue-тэй shadow (жишээ нь slate-д `rgb(15 23 42 / 0.08)`) илүү байгалиас.
-- **Dark mode-д shadow бараг ажилладаггүй** — elevation-ыг surface-ийн цайралт + border-оор гарга.
+- **Neutral хар** (`rgb(0 0 0 / α)`), hue tint-гүй — өнгөт сүүдэр PHILOSOPHY-ийн хориотой жагсаалтад.
+- **Dark mode-д shadow бараг ажилладаггүй** — elevation-ыг surface-ийн алхмаар гарга (theme.css-ийн бодит шат): `--background` (L 6%) → `--background-subtle` (9%) → `--card`/`--popover` (11%) → `--background-muted` (13%); хөвөгч surface-д дээр нь `1px solid var(--border)`. Shadow-г dark-д үлдээж болно, гэхдээ border нь гол ялгагч.
 - Border vs shadow: data-нягт UI-д 1px border хямдхан бөгөөд цэвэр; shadow-г interactive/floating элементэд үлдээ.
 
 ## Border ба divider
@@ -41,7 +46,7 @@ Shadow нь «гоёл» биш **давхаргын мэдээлэл** — юу
 ## Icon
 
 - Нэг л icon set хэрэглэ (Lucide, Heroicons, Phosphor…) — өөр set-ийн icon stroke/style-аараа зөрдөг.
-- Хэмжээ: UI-д 16/20/24px; текстийн хажууд байхдаа cap-height-тай тэнцэх орчим.
+- Хэмжээ текстийн хэмжээгээр: 12–13px текст → **14px** icon · 14px → **16px** · 16px → **18–20px** · 18–20px → **20px** · 24px+ гарчиг → **24px**. Icon-only товчинд 16px icon + 36px товч (дотор 24px hit target хангана). Lucide default stroke 2px; 14px-д 1.75px хүртэл нимгэлж болно.
 - Stroke width тогтмол (ихэвчлэн 1.5-2px); icon-ыг scale хийвэл stroke зузаан/нимгэн болдгийг анзаар.
 - Icon + text хослохдоо `gap: 8px`, вертикаль төвлөрөл `align-items: center`.
 - Icon-only товчид заавал `aria-label`.

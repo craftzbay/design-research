@@ -1,16 +1,18 @@
+[← Индекс руу буцах](README.md)
+
 # Motion / Animation
 
 ## Duration — богино байх тусмаа мэргэжлийн
 
 | Хэрэглээ | Хугацаа |
 |---|---|
-| Hover, color/opacity шилжилт | 100-150ms |
-| Dropdown, tooltip, жижиг элемент | 150-200ms |
-| Modal, drawer, panel | 200-300ms |
-| Хуудасны шилжилт, том элемент | 300-400ms |
+| Hover, color/opacity шилжилт | `--duration-fast` 120ms |
+| Dropdown, tooltip, popover | `--duration-base` 160ms |
+| Modal, drawer, panel | `--duration-slow` 240ms (overlay 160–240) |
+| Хуудасны шилжилт (View Transition) | ≤300ms |
 
-- 400ms-ээс урт UI animation бараг хэзээ ч хэрэггүй — хэрэглэгчийг хүлээлгэдэг.
-- Орох нь гарахаасаа удаан: enter 250ms бол exit 150-200ms.
+- Гурван token л бий: **120 / 160 / 240ms** (08-design-tokens.md). 240ms = компонентын дээд хязгаар (PHILOSOPHY); 300ms зөвхөн хуудасны шилжилтэд.
+- Орох нь гарахаасаа удаан: enter 240ms бол exit 160ms.
 
 ## Easing
 
@@ -43,7 +45,9 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important; /* infinite spinner/pulse-ийг зогсооно */
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;        /* smooth scroll-ийг унтраана */
   }
 }
 ```
@@ -52,7 +56,7 @@
 
 ## Практик дүрэм
 
-Эргэлзвэл: **150-250ms, ease-out, transform+opacity, нэг зүйл л хөдөлнө**. Хоёр ба түүнээс олон зүйл зэрэг анимэйшнтэй бол ихэнхдээ нэгийг нь хасах хэрэгтэй.
+Эргэлзвэл: **160ms (`--duration-base`), ease-out, transform+opacity, нэг зүйл л хөдөлнө**. Хоёр ба түүнээс олон зүйл зэрэг анимэйшнтэй бол ихэнхдээ нэгийг нь хасах хэрэгтэй.
 
 ## Нэмэлт техникүүд
 
@@ -61,7 +65,7 @@
 ```css
 [popover] {
   opacity: 0; transform: translateY(-4px);
-  transition: opacity 150ms, transform 150ms, display 150ms allow-discrete, overlay 150ms allow-discrete;
+  transition: opacity 160ms, transform 160ms, display 160ms allow-discrete, overlay 160ms allow-discrete;
 }
 [popover]:popover-open { opacity: 1; transform: none; }
 @starting-style { [popover]:popover-open { opacity: 0; transform: translateY(-4px); } }
